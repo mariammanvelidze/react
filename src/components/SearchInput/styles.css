@@ -1,0 +1,19 @@
+input {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  background-color: #111;
+  color: white;
+}
+
+input:focus {
+  border: 1px solid sandybrown;
+}
+
+div {
+  color: white;
+  height: 10px;
+  margin-top: 10px;
+  text-align: center;
+}
