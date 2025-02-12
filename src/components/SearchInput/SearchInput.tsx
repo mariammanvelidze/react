@@ -1,6 +1,7 @@
 import { ChangeEvent, RefObject, useEffect, useRef, useState } from 'react';
 import { useDebounce } from '../../hooks/useDebounce';
 import './styles.css';
+import { usePrevious } from '../../hooks/usePrevious';
 
 interface ISearchInput {
   value: string;
@@ -15,6 +16,7 @@ function SearchInput({ value, onChange }: Readonly<ISearchInput>) {
   const inputEvent = useRef<React.ChangeEvent<HTMLInputElement>>(null);
 
   const debouncedValue = useDebounce(searchedWord);
+  const prevDebouncedValue = usePrevious(debouncedValue);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchedWord(e.target.value);
@@ -22,10 +24,10 @@ function SearchInput({ value, onChange }: Readonly<ISearchInput>) {
   };
 
   useEffect(() => {
-    if (inputEvent.current) {
+    if (inputEvent.current && prevDebouncedValue !== debouncedValue) {
       onChange(inputEvent, debouncedValue);
     }
-  }, [debouncedValue, onChange]);
+  }, [debouncedValue, onChange, prevDebouncedValue]);
 
   return (
     <>
